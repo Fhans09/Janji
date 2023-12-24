@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Janji Temu</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Daftar Janji Temu</h1>
+      <div id="appointment-list">
+        <!-- Daftar Janji Temu akan ditampilkan di sini -->
+      </div>
+      <button class="add-btn" onclick="openForm()">Tambah Janji Temu</button>
+      <button class="view-all-btn" onclick="showAllAppointments()">
+        Lihat Semua Janji Temu
+      </button>
+    </div>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close" onclick="closeForm()">&times;</span>
+        <form id="appointmentForm">
+          <label for="description">Deskripsi:</label>
+          <input type="text" id="description" required />
+          <label for="date">Tanggal:</label>
+          <input type="date" id="date" required />
+          <label for="time">Waktu:</label>
+          <input type="time" id="time" required />
+          <button class="save-btn" type="button" onclick="saveAppointment()">
+            Simpan
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <button class="download-btn" onclick="downloadAppointments()">
+      Unduh Janji Temu
+    </button>
+
+    <script src="script.js"></script>
+    <script src="button-actions.js"></script>
+  </body>
+</html>
