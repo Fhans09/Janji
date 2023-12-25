@@ -26,20 +26,23 @@ function displayAppointments() {
   const appointmentList = document.getElementById("appointment-list");
   const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
 
+  // Mengurutkan appointments berdasarkan tanggal (dari yang terlama ke terbaru)
+  appointments.sort((a, b) => new Date(a.date) - new Date(b.date));
+
   appointmentList.innerHTML = "";
 
   const table = document.createElement("table");
   table.innerHTML = `
-      <thead>
-        <tr>
-          <th>Deskripsi</th>
-          <th>Tanggal</th>
-          <th>Waktu</th>
-          <th>Aksi</th>
-        </tr>
-      </thead>
-      <tbody id="appointment-table-body"></tbody>
-    `;
+        <thead>
+          <tr>
+            <th>Deskripsi</th>
+            <th>Tanggal</th>
+            <th>Waktu</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="appointment-table-body"></tbody>
+      `;
   appointmentList.appendChild(table);
   const tableBody = document.getElementById("appointment-table-body");
 
@@ -54,12 +57,13 @@ function displayAppointments() {
     cellDate.innerHTML = appointment.date;
     cellTime.innerHTML = appointment.time;
     cellActions.innerHTML = `
-        <button onclick="editAppointment('${appointment.description}')">Edit</button>
-        <button onclick="deleteAppointment('${appointment.description}')">Hapus</button>`;
+          <button onclick="editAppointment('${appointment.description}')">Edit</button>
+          <button onclick="deleteAppointment('${appointment.description}')">Hapus</button>`;
 
     row.setAttribute("data-description", appointment.description);
   });
 }
+
 
 function showAllAppointments() {
   const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
