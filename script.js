@@ -131,20 +131,65 @@ function deleteAppointment(description) {
 function downloadAppointments() {
   const appointments = JSON.parse(localStorage.getItem("appointments")) || [];
 
-  let wordContent = "Daftar Janji Temu\n\n";
-  appointments.forEach((appointment) => {
-    wordContent += `${appointment.description} - ${appointment.date} ${appointment.time}\n`;
-  });
+  // Create a new HTML document
+  const htmlContent = `
+    <html>
+      <head>
+        <style>
+          table {
+            border-collapse: collapse;
+            width: 100%;
+          }
+          th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+          }
+          th {
+            background-color: #f2f2f2;
+          }
+          .blue-bg {
+            background-color: #add8e6; /* Light Blue color for the "Deskripsi" column */
+          }
+        </style>
+      </head>
+      <body>
+        <h2>Daftar Janji Temu</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Deskripsi</th>
+              <th>Tanggal</th>
+              <th>Waktu</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${appointments.map((appointment, index) => `
+              <tr>
+                <td ${index === 0 ? 'class="blue-bg"' : ''}>${appointment.description}</td>
+                <td>${appointment.date}</td>
+                <td>${appointment.time}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </body>
+    </html>`;
 
-  const blob = new Blob([wordContent], { type: "application/msword" });
+  // Create a Blob containing the HTML content
+  const blob = new Blob([htmlContent], { type: 'text/html' });
+
+  // Create a URL for the Blob
   const url = URL.createObjectURL(blob);
 
-  const link = document.createElement("a");
+  // Create a link element and trigger a click to download the file
+  const link = document.createElement('a');
   link.href = url;
-  link.download = "daftar_janji_temu.doc";
+  link.download = 'daftar_janji_temu.doc';
   document.body.appendChild(link);
 
   link.click();
+
+  // Remove the link element
   document.body.removeChild(link);
 }
 
